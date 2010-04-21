@@ -805,12 +805,13 @@ They B<must not> use exponential notation ("1.23e-2").
 Dotted-integer (also known as dotted-decimal) versions consist of
 positive integers separated by full stop characters (i.e. "dots",
 "periods" or "decimal points").  This are equivalent in format to Perl
-"v-strings", with some additional restrictions on form.  They must be
-given in "normal" form, which has a leading "v" character and at least
-three integer components.  To retain a one-to-one mapping with decimal
-versions, all components after the first B<should> be restricted to the
-range 0 to 999.  The final component B<may> be separated by an
-underscore character instead of a period.
+"v-strings", with some additional restrictions on form.  They B<must>
+be given in "normal" form, which has a leading "v" character and at
+least one integer component.  Three is recommended.  To retain a
+one-to-one mapping with decimal versions, all components after the
+first B<should> be restricted to the range 0 to 999.  The final
+component B<may> be separated by an underscore character instead of a
+period.
 
    version => 'v1.2.3'      # OK
    version => 'v1.2_3'      # OK
