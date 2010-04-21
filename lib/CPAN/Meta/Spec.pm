@@ -826,6 +826,68 @@ period.
 
 =back
 
+=head2 Version Comparision
+
+=over 4
+
+=item Decimal with Decimal
+
+Decimal versions B<must> be compared against other decimal versions as
+decimal numbers.
+
+    1   = 1
+    1   = 1.0
+    1.1 > 1.01
+    1.9 < 2.00
+
+Alpha versions B<must> be normalized prior to conversion.  The C<_>
+B<must> be removed and the result collapsed into a decimal number.
+The result is then compared normally.
+
+    1.23_45 becomes 1.2345
+    1.0_04  becomes 1.004
+
+See L</Alpha Versions> below for more details.
+
+
+=item Dotted with Dotted
+
+Dotted versions B<must> be compared against other dotted versions as
+follows.  Starting with the first integer, compare them as integer
+numbers.  If they are equal, move on to the next integer.  Otherwise,
+that comparison is the result.
+
+    v1.2.3   = v1.2.3
+    v1.02.03 = v1.2.3
+
+If the two versions have unequal numbers of integers, the lesser
+B<must> be filled in with zeros.  For example, when comparing v1 with
+v1.2.3, v1 is treated as v1.0.0.
+
+    v1     < v1.2.3
+    v1.0.0 < v1.2
+
+Alpha versions B<must> be normalized prior to conversion.  The alpha
+part is treated as another integer.  The result is then compared
+normally.
+
+    v1.2_3 becomes v1.2.3
+
+See L</Alpha Versions> below for more details.
+
+
+=item Alpha Versions
+
+If the comparison turns out equal, and only one is an alpha version,
+the alpha version B<must> be considered the lesser.  An alpha version
+B<must not> equal a non-alpha version.
+
+    1.23_45  < 1.2345
+    v1.1.2_4 < v1.1.2.4
+    v1.1.2_5 > v1.1.2.4
+    v1.1.2_4 = v1.1.2_4
+
+
 =head2 Version Ranges
 
 Some fields (prereq, optional_features) indicate the particular
