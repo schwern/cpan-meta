@@ -876,6 +876,16 @@ normally.
 See L</Alpha Versions> below for more details.
 
 
+=item Dotted With Decimal
+
+When comparing dotted versions with decimal versions, the decimal
+version is first converted to a dotted version according the the rules
+in L</Version Conversion>.  They are then compared normally.
+
+Because there are some dotted versions which cannot be converted into
+decimal versions, the comparsion B<should> be done as dotted versions.
+
+
 =item Alpha Versions
 
 If the comparison turns out equal, and only one is an alpha version,
@@ -887,6 +897,42 @@ B<must not> equal a non-alpha version.
     v1.1.2_5 > v1.1.2.4
     v1.1.2_4 = v1.1.2_4
 
+
+=back
+
+=head2 Version Conversion
+
+=over 4
+
+=item Dotted to Decimal
+
+The first integer becomes the integer part of the decimal version.
+The rest becomes the decimal part.  Each subsequent integer part of
+the dotted version is padded to 3 digits and appended to the decimal
+part of the decimal version.
+
+    v1       becomes  1
+    v1.2     becomes  1.002
+    v5.12.1  becomes  5.012001
+
+If a decimal version has an integer part after the first greater than
+999 it cannot be represented as a decimal version.
+
+=item Decimal to Dotted
+
+The decimal version is multiplied by 1 and the integer part retained
+as the first dotted integer.  It is then subtracted from the decimal
+version.  This process is repeated multiplying by 1000, then 1000000
+and so on, increasing by 10 to the 3rd power each time.  Continue
+until the decimal version equals zero.
+
+    Starting with 5.012001...
+    Multiply by 1 and remove the integer: 5.012001 -> v5
+    Multiply by 10**3 and remove:         0.012001 -> v5.12
+    Multiple by 10**6 and remove:         0.001    -> v5.12.1
+    The decimal version is now zero, stop.
+
+=back
 
 =head2 Version Ranges
 
