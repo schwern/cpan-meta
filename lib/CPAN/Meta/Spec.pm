@@ -7,6 +7,10 @@ package CPAN::Meta::Spec;
 # ABSTRACT: specification for CPAN distribution metadata
 1;
 
+=head1 VERSION
+
+v3.0.0
+
 =head1 SYNOPSIS
 
   my $distmeta = {
@@ -65,8 +69,8 @@ package CPAN::Meta::Spec;
 
 =head1 DESCRIPTION
 
-This document describes version 2 of the CPAN distribution metadata
-specification, also known as the "CPAN Meta Spec".
+This document describes version v3.0.0 of the CPAN distribution
+metadata specification, also known as the "CPAN Meta Spec".
 
 Distribution metadata describe important properties of Perl
 distributions. Distribution building tools like Module::Build,
